@@ -10,7 +10,7 @@ A header only C library for experimenting with exceptions, inspired by David Han
 - Clone this repo
 - Add both header files found in [include folder](https://github.com/ziord/tinyexcept/blob/master/include) to your include/source folder. 
 - Include `tinyexcept.h` in your source file(s) for out of the box usage.
-- For custom integration/extension, include `tinyexcept_def.h` in your header file(s).
+- For custom integration/extension, include `tinyexcept_def.h` in your header file(s) for extension, and `tinyexcept.h` in your source file(s).
 <br/>
 
 ### Usage
