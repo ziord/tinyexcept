@@ -1,5 +1,5 @@
 #include "defs.h"
-
+#define     ins_val      60000000000000
 // test try-except
 void test_try_except() {
     try {
@@ -67,7 +67,7 @@ void test_try_except_else_finally(){
 void test_try_except_re_raise(){
     char* x = NULL;
     try{
-        x = allocate_mem(60000000000000);
+        x = allocate_mem(ins_val);
     }except(BadAlloc){
         printf("%s\n", get_message());
         re_raise;
@@ -88,7 +88,7 @@ void test_try_except_re_from(){
 void test_try_except_raise_finally(){
     char* x = NULL;
     try{
-        x = allocate_mem(60000000000000);
+        x = allocate_mem(ins_val);
     }except(BadAlloc, e){
         printf("%s\n", get_message());
         raise(e);
@@ -112,7 +112,7 @@ void test_try_except_re_raise_finally(){
 void test_try_except_re_raise_finally2(){
     char* x = NULL;
     try{
-        x = allocate_mem(60000000000000);
+        x = allocate_mem(ins_val);
     }except(BadAlloc, e){
         printf("%s\n", get_message());
         try{
@@ -133,7 +133,7 @@ void test_try_except_re_raise_finally2(){
 void test_try_except_finally2(){
     char* x = NULL;
     try{
-        x = allocate_mem(60000000000000);
+        x = allocate_mem(ins_val);
     }except(BadDataRequest, e){
         printf("%s\n", get_message());
     }finally{
