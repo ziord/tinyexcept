@@ -148,7 +148,7 @@ void test_tinyexcept(){
     test_try_except_else();
     test_try_except_else_finally();
 
-    // the commented functions would cause exceptions
+    // the functions below would cause exceptions
 
     test_try_except_finally();
     test_try_except_re_raise();
