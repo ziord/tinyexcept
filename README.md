@@ -114,6 +114,9 @@ That is:
     }end_try
 ```
 
+However, `finally` comes with a caveat. If exceptions are `re_raise`d or `raise`d inside an `except` block, `finally`'s block of code won't get executed.  
+<br/>
+
 `return_` should be used within `try`/`except`/`else_`/`finally`/`end_try` blocks to return values or return from functions, as it provides necessary cleanup before exiting the function.
 That is:
 
@@ -142,8 +145,6 @@ Or exiting:
         }end_try
     }
 ```
-
-However, `finally` comes with a caveat. If exceptions are `re_raise`d or `raise`d inside an `except` block, `finally`'s block of code won't get executed.  
 <br/>
 
 ### Limitations
