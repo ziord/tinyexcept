@@ -63,9 +63,9 @@ tinyexcept also provides `BaseException` which could be used as a "catch-all" `E
     }end_try
 ```
 
-And of course there's `re_raise`, `raise_from`, `else_` and `finally`
+And of course there's `re_raise`, `raise_from`, `else_`, `return_` and `finally`.
 
-`re_raise` and `raise_from` works within an `except` block (with an _exception_ for nested `try` blocks within an `except` block. See [tests](https://github.com/ziord/tinyexcept/blob/master/tests) for more details.).
+`re_raise` and `raise_from` works within an `except` block (with an _exception_ for nested `try` blocks within an `except` block. See [tests](https://github.com/ziord/tinyexcept/blob/master/tests) for more details).
 
 `re_raise` typically re-raises a previously raised exception, within that exception's `except` block:
  
@@ -112,6 +112,35 @@ That is:
     }finally{
         printf("Cleaning up stuffs...\n");
     }end_try
+```
+
+`return_` should be used within `try`/`except`/`else_`/`finally`/`end_try` blocks to return values or return from functions, as it provides necessary cleanup before exiting the function.
+That is:
+
+```c
+    int get_value(){
+        int my_stuff;
+        try{
+            my_stuff = get_stuff(100);
+        }except(BaseException){
+            my_stuff = 20;
+            return_ my_stuff;
+        }end_try
+    }
+```
+
+Or exiting:
+
+```c
+    void do_something(){
+        try{
+            int my_stuff = get_stuff(100);
+            printf("doing something... %d\n", my_stuff);
+        }except(BaseException){
+            printf("couldn't do anything\n");
+            return_;
+        }end_try
+    }
 ```
 
 However, `finally` comes with a caveat. If exceptions are `re_raise`d or `raise`d inside an `except` block, `finally`'s block of code won't get executed.  

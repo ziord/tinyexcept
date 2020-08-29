@@ -6,6 +6,9 @@
 // test try-except
 void test_try_except();
 
+// test try-except - return_
+int test_try_except_return();
+
 // test try-except with BaseException
 void test_try_except_w_be();
 

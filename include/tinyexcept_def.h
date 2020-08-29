@@ -40,8 +40,11 @@ void init_ExceptionFrame(ExceptionFrame *frame) {
 
 
 static
-void init_exc_frame(ExceptionFrame *frame, Exception *exception,
-                    char *file, int line) {
+void init_exc_frame(
+        ExceptionFrame *frame,
+        Exception *exception,
+        char *file, int line)
+{
     frame->exception = exception;
     frame->ex_line = line;
     frame->file_name = file;
@@ -84,7 +87,9 @@ void _exc__pop_frame() {
 
 inline
 static
-void exc_print_message(ExceptionFrame *frame, int should_abort) {
+void exc_print_message(ExceptionFrame *frame,
+        int should_abort)
+{
     fprintf(stderr, "Traceback (most recent call last):\n");
     fprintf(stderr, "   File \"<%s>\", line <%d>\n",
             frame->file_name, frame->ex_line);
@@ -101,7 +106,8 @@ void raise_exception(
         Exception *exception,
         int line, char *filename,
         int should_abort,
-        int _from_handler) {
+        int _from_handler)
+{
     assert(exception);  // exception cannot be NULL
     ExceptionFrame *curr_frame = EXStack;
     if (curr_frame == NULL) {
@@ -125,7 +131,8 @@ void raise_exception_from(
         int prev_line, char *prev_filename,
         Exception *exception,
         int line, char *filename,
-        int _from_handler) {
+        int _from_handler)
+{
     assert(prev_exception);
     assert(exception);
     raise_exception(prev_exception,

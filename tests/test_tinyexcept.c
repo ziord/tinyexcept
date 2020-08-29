@@ -12,6 +12,18 @@ void test_try_except() {
     end_try
 }
 
+int test_try_except_return() {
+    try {
+            unsigned int x = get_data(60);
+        }
+    except(BadDataRequest, e)
+        {
+            printf("%s\n", e.cause);
+            return_ 5;
+        }
+        end_try
+}
+
 // test try-except with BaseException
 void test_try_except_w_be() {
     try{
@@ -144,6 +156,8 @@ void test_try_except_finally2(){
 
 void test_tinyexcept(){
     test_try_except();
+    int x = test_try_except_return();
+    printf("From test_try_except_return(): %d\n", x);
     test_try_except_w_be();
     test_try_except_else();
     test_try_except_else_finally();
