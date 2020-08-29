@@ -49,7 +49,7 @@ The `e` argument to `except` is optional:
         printf("%s\n", get_message());
     }end_try
 ```
-`get_message()` returns the cause of the exception, synonymous to `e.cause`
+`get_message()` returns the cause of the exception, synonymous to `e.cause`.
 
 `end_try` is _necessary_ for cleanup and implementation correctness.
 
