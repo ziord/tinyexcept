@@ -19,48 +19,48 @@ tinyexcept allows creation of custom `Exception` objects, via the `Exception` `s
 **Examples**
 
 ```c
-    #include "tinyexcept.h"
-    // create Exception object
-    Exception BadStuff = {"Got bad stuff"};
+#include "tinyexcept.h"
+// create Exception object
+Exception BadStuff = {"Got bad stuff"};
 
-    int get_stuff(int x){
-        if (x < 50){
-            return x + 1;
-        }else{
-            raise(BadStuff);  // raise an exception
-        }
+int get_stuff(int x){
+    if (x < 50){
+        return x + 1;
+    }else{
+        raise(BadStuff);  // raise an exception
     }
+}
 ```
 And the caller of this function would handle this exception like this:
 
 ```c
-    try{
-        int my_stuff = get_stuff(50);
-    }except(BadStuff, e){
-        printf("%s\n", e.cause);
-    }end_try
+try{
+    int my_stuff = get_stuff(50);
+}except(BadStuff, e){
+    printf("%s\n", e.cause);
+}end_try
 ```
 The `e` argument to `except` is optional:
 
 ```c
-    try{
-        int my_stuff = get_stuff(50);
-    }except(BadStuff){
-        printf("%s\n", get_message());
-    }end_try
+try{
+    int my_stuff = get_stuff(50);
+}except(BadStuff){
+    printf("%s\n", get_message());
+}end_try
 ```
 `get_message()` returns the cause of the exception, synonymous to `e.cause`.
 
 `end_try` is _necessary_ for cleanup and implementation correctness.
 
-tinyexcept also provides `BaseException` which could be used as a "catch-all" `Exception` object.
+tinyexcept also provides `BaseException` which can be used as a "catch-all" or generic `Exception` object.
 
 ```c
-    try{
-        int my_stuff = get_stuff(50);
-    }except(BaseException){
-        printf("%s\n", get_message());
-    }end_try
+try{
+    int my_stuff = get_stuff(50);
+}except(BaseException){
+    printf("%s\n", get_message());
+}end_try
 ```
 
 And of course there's `re_raise`, `raise_from`, `else_`, `return_` and `finally`.
@@ -70,12 +70,12 @@ And of course there's `re_raise`, `raise_from`, `else_`, `return_` and `finally`
 `re_raise` typically re-raises a previously raised exception, within that exception's `except` block:
  
 ```c
-    try{
-        int my_stuff = get_stuff(50);
-    }except(BaseException){
-        printf("%s\n", get_message());
-        re_raise;   // oh no, bad stuff :(
-    }end_try
+try{
+    int my_stuff = get_stuff(50);
+}except(BaseException){
+    printf("%s\n", get_message());
+    re_raise;   // oh no, bad stuff :(
+}end_try
 ```
 `raise_from` acts like Python's nifty exception statement:
 ```python 
@@ -84,34 +84,34 @@ raise Exception from AnotherException
 That is:
 
 ```c
-    try{
-        int my_stuff = get_stuff(50);
-    }except(BaseException, e){
-        raise_from(e, AnotherException);   // raise AnotherException from previous exception 
-    }end_try
+try{
+    int my_stuff = get_stuff(50);
+}except(BaseException, e){
+    raise_from(e, AnotherException);   // raise AnotherException from previous exception 
+}end_try
 ```
 
 `else_`'s body is executed when no exception takes place:
 
 
  ```c
-    try{
-        int my_stuff = get_stuff(10);
-    }except(BadStuff){
-        printf("wheew! close one\n");
-    }else_{
-        printf("wheew! Nothing happended\n");
-    }end_try
+try{
+    int my_stuff = get_stuff(10);
+}except(BadStuff){
+    printf("wheew! close one\n");
+}else_{
+    printf("wheew! Nothing happended\n");
+}end_try
 ```
 
 `finally` can be used for cleanups.
 
  ```c
-    try{
-        int my_stuff = get_stuff(100);
-    }finally{
-        printf("Cleaning up stuffs...\n");
-    }end_try
+try{
+    int my_stuff = get_stuff(100);
+}finally{
+    printf("Cleaning up stuffs...\n");
+}end_try
 ```
 
 However, `finally` comes with a caveat. If exceptions are `re_raise`d or `raise`d inside an `except` block, `finally`'s block of code won't get executed.  
@@ -121,29 +121,29 @@ However, `finally` comes with a caveat. If exceptions are `re_raise`d or `raise`
 That is:
 
 ```c
-    int get_value(){
-        int my_stuff;
-        try{
-            my_stuff = get_stuff(100);
-        }except(BaseException){
-            my_stuff = 20;
-            return_ my_stuff;
-        }end_try
-    }
+int get_value(){
+    int my_stuff;
+    try{
+        my_stuff = get_stuff(100);
+    }except(BaseException){
+        my_stuff = 20;
+        return_ my_stuff;
+    }end_try
+}
 ```
 
 Or exiting:
 
 ```c
-    void do_something(){
-        try{
-            int my_stuff = get_stuff(100);
-            printf("doing something... %d\n", my_stuff);
-        }except(BaseException){
-            printf("couldn't do anything\n");
-            return_;
-        }end_try
-    }
+void do_something(){
+    try{
+        int my_stuff = get_stuff(100);
+        printf("doing something... %d\n", my_stuff);
+    }except(BaseException){
+        printf("couldn't do anything\n");
+        return_;
+    }end_try
+}
 ```
 <br/>
 
