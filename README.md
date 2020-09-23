@@ -79,7 +79,7 @@ try{
 ```
 `raise_from` acts like Python's nifty exception statement:
 ```python 
-raise Exception from AnotherException
+raise AnotherException from PreviousException
 ```
 That is:
 
